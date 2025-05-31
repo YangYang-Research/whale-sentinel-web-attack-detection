@@ -32,7 +32,7 @@ class Payload(BaseModel):
 load_dotenv()
 
 AWS_REGION = os.getenv("AWS_REGION")
-AWS_API_KEY_NAME = os.getenv("AWS_API_KEY_NAME")
+AWS_SECRET_NAME = os.getenv("AWS_SECRET_NAME")
 AWS_API_SECRET_KEY_NAME = os.getenv("AWS_API_SECRET_KEY_NAME")
 
 app = FastAPI()
@@ -48,7 +48,7 @@ def get_secret():
 
     try:
         get_secret_value_response = client.get_secret_value(
-            SecretId=AWS_API_KEY_NAME
+            SecretId=AWS_SECRET_NAME
         )
     except ClientError as e:
         # For a list of exceptions thrown, see
