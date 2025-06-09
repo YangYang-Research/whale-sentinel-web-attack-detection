@@ -1,9 +1,15 @@
-# WS Web Attack Detection
+# Whale Sentinel Web Attack Detection
 
-## Develop Mode
+This module leverages advanced deep learning techniques to detect and mitigate sophisticated cyberattacks with high precision. Using AI-driven behavioral analysis, it continuously monitors incoming requests to identify malicious patterns in real time.
 
-`uvicorn app:app --host 0.0.0.0 --port 5001 --reload`
+Key Functions:
 
-## Server Mode
+✅ Intelligent SQL Injection Detection – Analyzes database query behavior to flag and neutralize SQL injection attempts.
 
-`uvicorn app:app --host 0.0.0.0 --port 5001`
+✅ Cross-Site Scripting (XSS) Defense – Identifies script injection attacks targeting web applications and prevents unauthorized code execution.
+
+✅ Command Injection Protection – Detects anomalous command executions to block exploitation of system vulnerabilities.
+
+✅ Adaptive Threat Learning – Continuously improves detection accuracy by dynamically updating its knowledge base using AI-driven threat intelligence.
+
+✅ Seamless Integration with WS Security Framework – Works alongside other Whale Sentinel security components to provide proactive attack prevention, high-speed anomaly detection, and automated response mechanisms.

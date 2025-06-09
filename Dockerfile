@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y nginx openssl && \
 WORKDIR /app
 
 # Copy application files
-COPY . .
+COPY . /app/whale-sentinel-web-attack-detection
 
 # Set working directory for the service
 WORKDIR /app/whale-sentinel-web-attack-detection
