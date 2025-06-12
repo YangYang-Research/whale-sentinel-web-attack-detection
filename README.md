@@ -18,3 +18,7 @@ Key Functions:
 ✅ Adaptive Threat Learning – Continuously improves detection accuracy by dynamically updating its knowledge base using AI-driven threat intelligence.
 
 ✅ Seamless Integration with WS Security Framework – Works alongside other Whale Sentinel security components to provide proactive attack prevention, high-speed anomaly detection, and automated response mechanisms.
+
+## Contributing
+
+## Release
