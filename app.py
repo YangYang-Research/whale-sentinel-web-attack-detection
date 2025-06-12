@@ -27,6 +27,8 @@ log = logging.getLogger(__name__)
 class Payload(BaseModel):
     payload: str
     event_info: str
+    agent_id: str
+    agent_name: str
     request_created_at: str
 
 load_dotenv()
@@ -113,18 +115,22 @@ def extract_eventInfo(event_info: str):
     except ValueError:
         log.error(f"Invalid event_info format: {event_info}. Expected format: agent_id|service_name|event_id")
 
-async def process_loggcollection(payload: Payload, eventInfo: str, score: float):
+async def process_loggcollection(payload: Payload, eventInfo: str, action_result: str, action_status: str,  score: float):
     info = extract_eventInfo(payload.event_info)
     # Construct log entry
     logEntry = {
         "name": "ws-web-attack-detection",
-        "agent_id": info["agent_id"],
+        "agent_id": payload.agent_id,
+        "agent_name": payload.agent_name,
         "source": str(info["service_name"]).lower(),
         "destination": "ws-web-attack-detection",
         "event_info": eventInfo,
         "level": "INFO",
         "event_id": info["event_id"],
         "type": "SERVICE_EVENT",
+        "action": "ANALYSIS_REQUEST",
+        "action_result": action_result,
+        "action_status": action_status,
         "raw_request": payload.payload,
         "prediction": score,
         "message": "Received request from service",
@@ -187,7 +193,7 @@ async def process_detection(payload: Payload, authorization: str):
     event_info = payload.event_info.replace("WS_GATEWAY_SERVICE", "WS_WEB_ATTACK_DETECTION")
 
     # Trigger log collection (do not await to keep async non-blocking)
-    asyncio.create_task(process_loggcollection(payload, eventInfo=event_info, score=accuracy))
+    asyncio.create_task(process_loggcollection(payload, eventInfo=event_info, action_result="NO_MAKE_DECISION", action_status="SUCCESSED", score=accuracy))
 
     return JSONResponse(content={
         "status": "success",
