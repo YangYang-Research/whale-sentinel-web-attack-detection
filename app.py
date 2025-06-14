@@ -97,12 +97,12 @@ def ws_decoder(_string: str) -> str:
 def get_decoded_auth(authorization: str) -> str:
     try:
         if not authorization.startswith("Basic "):
-            raise HTTPException(status_code=401, detail={"status": "error", "message": "Unauthorized", "error_code": 401})
+            raise HTTPException(status_code=401, detail={"status": "Error", "message": "Unauthorized", "error_code": 401})
         encoded_auth = authorization[len("Basic "):]
         decoded_auth = base64.b64decode(encoded_auth).decode()
         return decoded_auth
     except Exception:
-        raise HTTPException(status_code=401, detail={"status": "error", "message": "Unauthorized", "error_code": 401})
+        raise HTTPException(status_code=401, detail={"status": "Error", "message": "Unauthorized", "error_code": 401})
 
 def to_unix_time(timestamp):
     if not isinstance(timestamp, str):
@@ -157,7 +157,7 @@ def ping_info(authorization: str = Header(None)):
     apiKey = get_secret()
     expectedAuthValue = f"ws:{apiKey}"
     if decoded_auth != expectedAuthValue:
-        raise HTTPException(status_code=401, detail={"status": "error", "message": "Unauthorized", "error_code": 401})
+        raise HTTPException(status_code=401, detail={"status": "Error", "message": "Unauthorized", "error_code": 401})
     return {
         "model": "noobpk/web-attack-detection",
         "sample": "592479",
@@ -176,14 +176,14 @@ async def detection(payload: Payload, authorization: str = Header(None)):
         result = await asyncio.wait_for(process_detection(payload, authorization), timeout=30.0)
         return result
     except asyncio.TimeoutError:
-        raise HTTPException(status_code=504, detail={"status": "error", "message": "Request timed out", "error_code": 504})
+        raise HTTPException(status_code=504, detail={"status": "Error", "message": "Request timed out", "error_code": 504})
     
 async def process_detection(payload: Payload, authorization: str):
     decoded_auth = get_decoded_auth(authorization)
     apiKey = get_secret()
     expectedAuthValue = f"ws:{apiKey}"
     if decoded_auth != expectedAuthValue:
-        raise HTTPException(status_code=401, detail={"status": "error", "message": "Unauthorized", "error_code": 401})
+        raise HTTPException(status_code=401, detail={"status": "Error", "message": "Unauthorized", "error_code": 401})
     
     payload_data = payload.payload
     decode_payload = ws_decoder(payload_data)
