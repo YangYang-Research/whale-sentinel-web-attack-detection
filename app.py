@@ -159,8 +159,8 @@ async def process_loggcollection(request_payload: RequestPayload, eventInfo: str
         "raw_request": str(request_payload),
         "message": message,
         "timestamps": {
-            "created_at": to_unix_time(request_payload.request_created_at),
-            "processed_at": to_unix_time(datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')),
+            "request_created_at": to_unix_time(request_payload.request_created_at),
+            "request_processed_at": to_unix_time(datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')),
             "logged_at": datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
         }
     }
